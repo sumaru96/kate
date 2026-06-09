@@ -16,7 +16,6 @@ set(SOURCES
 
 add_executable(kate ${SOURCES})
 
-# Более надежная проверка на Release (работает и для MinGW, и для GCC)
 if(CMAKE_BUILD_TYPE MATCHES "Release|ReleaseWithDebInfo")
     if(MSVC)    
         target_compile_options(kate PRIVATE /O2)
