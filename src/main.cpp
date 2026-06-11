@@ -14,7 +14,7 @@ int main(const int argc, char* argv[]){
         return 0;
     }
 
-    const string command = lowercase(argv[1]);
+    const string command = argv[1];
 
     if(command == "new"){
         command_new(argc,argv);
