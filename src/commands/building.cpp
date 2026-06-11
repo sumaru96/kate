@@ -1,84 +1,84 @@
 // building.cpp
 
-// This file contains the implementations of function by building and runing project wight Gradle compiler
+// This file contains the implementations of function by building and running project wight Gradle compiler
 
 #include "../main-header.hpp"
 #include <cstdlib>
 #include <iostream>
-#include <fstream>
 #include <string>
-#include <filesystem>
 
 using namespace std;
 
 // ----------------FUNCTIONS---------------------
 
-    // This function runing app (if jar is exist) and no rebuild project
+    // This function running app (if jar is exist) and no rebuild project
 
-int unrebuild(){
-    const filesystem::path toml = "kate.toml";
-    if (filesystem::exists(toml)) {
-        vector<string> values;
-        ifstream file(toml);
-        string content((istreambuf_iterator<char>(file)),istreambuf_iterator<char>());
-        values = get_values({"name"}, content);
-        values = split(values[0], '"');
-        const string name = values[0];
+int unrebuild(const int argc, char* argv[]) {
 
-    
-        filesystem::path path = "build/libs/" + name + ".jar";
-        if(!filesystem::exists(path)){
-            cerr << RED << "[ERROR] file: " << MAGENTA << path.string() << RED << " dont exist" << RESET << endl;
-            return -1;
+    const string toml = "kate.toml";
+    const string source = read_file(toml);
+    string args;
+
+    if (argc >= 4) {
+
+        if(const string flag = argv[3]; (flag == "--args" && argc > 4 )||(flag == "-a" && argc > 4)) {
+            args = " " + string(argv[4]);
         }
-        string command = "java -jar " + path.string() ;
+    }
+
+    if (!source.empty()) {
+        const vector<string> values = get_values({"jar-path"}, source);
+        const string command = "java -jar " + split(values[0], '"')[0] + args;
         system(command.c_str());
         return 0;
     }
-    cerr << RED << "[ERROR] file: " << MAGENTA << toml << RED << " dont exist" << RESET << endl;
+
     return -1;
 }
-    // This function building and runing app by utilise Gradle
+
+
+    // This function building and running app by utilize Gradle
+
 int run(const string& args){
     #if _WIN32
-        string command = "cmd /c gradlew.bat assemble run" + args;
+        const string command = "cmd /c gradlew.bat assemble run" + args;
         system(command.c_str());
     #else
-        string command = "./gradlew assemble run" + args;
+        const string command = "./gradlew.sh assemble run" + args;
         system("chmod +x gradlew.sh");
         system(command.c_str());
     #endif
     return 0;
 }
 
-    // This function building project by utilise Gradle
+    // This function building project by utilize Gradle
 
 int command_build(){
     #if _WIN32
         system("cmd /c gradlew.bat build");
     #else
         system("chmod +x gradlew.sh");
-        system("./gradlew build");
+        system("./gradlew.sh build");
     #endif
     return 0;
 }
 
     
-    // This function checking flag and call corect function 
-int command_run(int argc, char* argv[]){
+    // This function checking flag and call correct function
+int command_run(const int argc, char* argv[]){
 
-    string args = "";
+    string args;
 
     if(argc >= 3){
-        string flag = argv[2];
-        if(flag == "--args" || flag == "-a"){
+
+        if(const string flag = argv[2]; flag == "--args" || flag == "-a"){
             if(argc > 3)
                 args = " --args=\"" + string(argv[3]) + "\""; 
             else{
                 cerr << RED << "No argument passed" << RESET << endl;
             }
         }else if (flag == "--unrebuild" || flag == "-u") {
-            unrebuild();
+            unrebuild(argc, argv);
             return 0;
         }else if (flag == "--rebuild" || flag == "-r") {
             run(args);

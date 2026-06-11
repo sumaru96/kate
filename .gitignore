@@ -3,3 +3,5 @@
 compile_commands.json
 dcr.lock
 target/*
+cmake-build-debug/*
+.idea/*

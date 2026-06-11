@@ -25,7 +25,7 @@ const string SOURCE_JAVA_CODE = R"(public class Main {
 }
 )";
 
-    // source code for gradle build files
+    // source code for Gradle build files
 
 const string SOURCE_KOTLIN_GRADLE_BUILD = R"(plugins {
     kotlin("jvm") version "1.9.0"
@@ -47,7 +47,7 @@ tasks.jar {
 )";
 
 const string SOURCE_JAVA_GRADLE_BUILD = R"(plugins {
-    if 'java'
+    id 'java'
     id 'application'
 }
 repositories {
@@ -74,51 +74,49 @@ jar {
     // function creation directories and files
 
 int create_directory(const filesystem::path& path, const string& lang){
-    
-        // source code for gradle settings files
-
-    string SOURCE_SETTINGS;
 
         // main path for directories and files
 
-    filesystem::path SOURCE_DIRECTORIES_PATH;
-    filesystem::path SOURCE_MAIN_FILE_PATH;
-    filesystem::path GRADLE_BUILD_FILE_PATH;
-    filesystem::path GRADLE__SETTINGS_FILE_PATH;
+    filesystem::path source_directories_path;
+    filesystem::path source_main_file_path;
+    filesystem::path gradle_build_file_path;
+    filesystem::path gradle_settings_file_path;
 
-    SOURCE_SETTINGS = "rootProject.name = \"" + path.string() + "\"";
+    // source code for Gradle settings files
+
+    const string SOURCE_SETTINGS = "rootProject.name = \"" + path.string() + "\"";
 
     if (lang == "java"){
 
             // Here set value for java project
 
-        SOURCE_DIRECTORIES_PATH = path / "src" / "main" / "java";
-        GRADLE_BUILD_FILE_PATH = path / "build.gradle";
-        SOURCE_MAIN_FILE_PATH = SOURCE_DIRECTORIES_PATH / "Main.java";
-        GRADLE__SETTINGS_FILE_PATH = path / "settings.gradle";
+        source_directories_path = path / "src" / "main" / "java";
+        gradle_build_file_path = path / "build.gradle";
+        source_main_file_path = source_directories_path / "Main.java";
+        gradle_settings_file_path = path / "settings.gradle";
 
             // creating dir and files for java project
 
-        if(!is_not_error(create_dir(SOURCE_DIRECTORIES_PATH))) return -1;
-        if(!is_not_error(create_file_and_write(GRADLE_BUILD_FILE_PATH, SOURCE_JAVA_GRADLE_BUILD))) return -1;
-        if(!is_not_error(create_file_and_write(SOURCE_MAIN_FILE_PATH, SOURCE_JAVA_CODE))) return -1;
-        if(!is_not_error(create_file_and_write(GRADLE__SETTINGS_FILE_PATH, SOURCE_SETTINGS))) return -1;
+        if(!is_not_error(create_dir(source_directories_path))) return -1;
+        if(!is_not_error(create_file_and_write(gradle_build_file_path, SOURCE_JAVA_GRADLE_BUILD))) return -1;
+        if(!is_not_error(create_file_and_write(source_main_file_path, SOURCE_JAVA_CODE))) return -1;
+        if(!is_not_error(create_file_and_write(gradle_settings_file_path, SOURCE_SETTINGS))) return -1;
 
     }else if (lang == "kotlin") {
 
             // Here set value for kotlin project
 
-        SOURCE_DIRECTORIES_PATH = path / "src" / "main" / "kotlin";
-        GRADLE_BUILD_FILE_PATH = path / "build.gradle.kts";
-        SOURCE_MAIN_FILE_PATH = SOURCE_DIRECTORIES_PATH / "Main.kt";
-        GRADLE__SETTINGS_FILE_PATH = path / "settings.gradle.kts";
+        source_directories_path = path / "src" / "main" / "kotlin";
+        gradle_build_file_path = path / "build.gradle.kts";
+        source_main_file_path = source_directories_path / "Main.kt";
+        gradle_settings_file_path = path / "settings.gradle.kts";
 
             // creating dir and files for kotlin project
 
-        if(!is_not_error(create_dir(SOURCE_DIRECTORIES_PATH))) return -1;
-        if(!is_not_error(create_file_and_write(GRADLE_BUILD_FILE_PATH, SOURCE_KOTLIN_GRADLE_BUILD))) return -1;
-        if(!is_not_error(create_file_and_write(SOURCE_MAIN_FILE_PATH, SOURCE_KOTLIN_CODE))) return -1;
-        if(!is_not_error(create_file_and_write(GRADLE__SETTINGS_FILE_PATH, SOURCE_SETTINGS))) return -1;
+        if(!is_not_error(create_dir(source_directories_path))) return -1;
+        if(!is_not_error(create_file_and_write(gradle_build_file_path, SOURCE_KOTLIN_GRADLE_BUILD))) return -1;
+        if(!is_not_error(create_file_and_write(source_main_file_path, SOURCE_KOTLIN_CODE))) return -1;
+        if(!is_not_error(create_file_and_write(gradle_settings_file_path, SOURCE_SETTINGS))) return -1;
     
     }else {
 

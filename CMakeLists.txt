@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(kate VERSION 1.0.0 LANGUAGES CXX)
+project(kate VERSION 1.0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -12,6 +12,7 @@ set(SOURCES
     src/commands/building.cpp
     src/commands/new.cpp
     src/commands/help.cpp
+        src/commands/clean.cpp
 )
 
 add_executable(kate ${SOURCES})

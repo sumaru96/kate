@@ -11,7 +11,7 @@ using namespace std;
 
 // ----------------FUNCTIONS---------------------
 
-    // This function spliting line by character
+    // This function splitting line by character
 
 vector<string> split(const string& str,char delimiter) {
     vector<string> result;
@@ -32,7 +32,7 @@ vector<string> split(const string& str,char delimiter) {
     return result;
 }
 
-    // This function triming space and tab by start and end
+    // This function trimming space and tab by start and end
 
 string strim(const string& str) {
     size_t start = 0;
@@ -73,4 +73,16 @@ vector<string> get_values(const vector<string>& value, const string& toml){
         }
     }
     return values;
-}  
+}
+
+    // This function lower string and return her
+
+string lowercase(const string& str) {
+    string result;
+    for (char letter : str) {
+        if (letter >= 'A' && letter <= 'Z') {
+            result += static_cast<char>(letter + 32);
+        }
+    }
+    return result;
+}

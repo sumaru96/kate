@@ -16,59 +16,59 @@ using namespace std;
 
     // This function returns the original file from .h (headers) made via xxd
 
-int binary_to_file(filesystem::path& path,unsigned char binary[],unsigned int length){
+int binary_to_file(const filesystem::path& path,const unsigned char binary[],const unsigned int length){
     if (filesystem::exists(path)) {
        return 0; 
     }
-    ofstream file(path,ios::binary);
-    if(file.is_open()){
+
+    if(ofstream file(path,ios::binary); file.is_open()){
         file.write(reinterpret_cast<const char*>(binary),length);
         file.close();
     }else{
-        cerr << RED << "[ERROR] Failed to create file: " << path << RESET << endl;
-        cerr << RED << "Check if you have write permissions in this directory." << RESET << endl;
+        cerr << RED << "[ERROR] Failed to create file: " << MAGENTA << path << RESET << endl;
         return -1;
     }
+
+    cout << GREEN << "\tCreated file " << MAGENTA << path << RESET << endl;
     return 0;
 }
 
     // This function safely creating new file and writing text if his not exist
 
-int create_file_and_write(filesystem::path& path,const string &source){
+int create_file_and_write(const filesystem::path& path,const string &source){
     if (filesystem::exists(path)) {
         return 0; 
     }
 
-    ofstream file(path);
-    if (file.is_open()) {
+    if (ofstream file(path); file.is_open()) {
         file << source;
         file.close();
     }else{
-        cerr << RED << "[ERROR] Failed to open or create file: " << path << RESET << endl;
-        cerr << RED << "Check if you have write permissions in this directory." << RESET << endl;
+        cerr << RED << "[ERROR] Failed to open or create file: " << MAGENTA << path << RESET << endl;
         return -1;
     }
+    cout << GREEN << "\tCreated file " << MAGENTA << path << RESET << endl;
     return 0;
 }
 
     // This function safely creating new directories if her not exist
 
-int create_dir(filesystem::path& path){
+int create_dir(const filesystem::path& path){
     if (filesystem::exists(path)) {
         return 0; 
     }
 
     if(!filesystem::create_directories(path)){
-        cerr << RED << "[ERROR] Failed to creating directoires : " << path << RESET << endl;
-        cerr << RED << "Check if you have write permissions in this directory." << RESET << endl;
+        cerr << RED << "[ERROR] Failed to creating directories : " << MAGENTA << path << RESET << endl;
         return -1;
     }
+    cout << GREEN << "\tDirectory created " << CYAN << path << RESET << endl;
     return 0;
 }
 
     // This function checking is are there not any error 
 
-bool is_not_error(int x){
+bool is_not_error(const int& x){
     if(x < 0){
         return false;
     }
@@ -77,12 +77,25 @@ bool is_not_error(int x){
 
     // This function create TOML file for Kate parameters
 
-int create_toml_file(filesystem::path& path){
+int create_toml_file(const filesystem::path& path){
     filesystem::path toml_path = path / "kate.toml";
     if (filesystem::exists(toml_path)) {
         return 0; 
     }
-    string source = "[project]\nname = \"" + path.string() + "\"\n";
+    const string name = path.string();
+    const string source = "[project]\nname = \"" + name + "\"\n" + "[run.unrebuild]\n"
+                    + "jar-path = \"build/libs/" + name + ".jar\"\n" ;
     return create_file_and_write(toml_path, source);
 }
-    
+
+    // This function reading file to one string and return his
+
+string read_file(const filesystem::path& path) {
+    if (filesystem::exists(path)) {
+        ifstream file(path);
+        string content((istreambuf_iterator<char>(file)),istreambuf_iterator<char>());
+        return content;
+    }
+    cerr << RED << "[ERROR] Failed to reading file : " << MAGENTA << path << RESET << endl;
+    return "";
+}

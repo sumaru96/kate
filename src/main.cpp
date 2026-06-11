@@ -1,19 +1,20 @@
 // main.cpp
 
-// This is main file , his get arguments and set his a other functions
+// This is main file , his get arguments and set his another functions
 
-#include "./main-header.hpp"
+#include <iostream>
+#include "main-header.hpp"
 
 using namespace std;
 
-int main(int argc, char* argv[]){
+int main(const int argc, char* argv[]){
     
     if(argc <= 1){
         command_help();
         return 0;
     }
 
-    string command = argv[1];
+    const string command = lowercase(argv[1]);
 
     if(command == "new"){
         command_new(argc,argv);
@@ -23,8 +24,10 @@ int main(int argc, char* argv[]){
         command_build();
     }else if(command == "help" || command == "--help" || command == "-h"){
         command_help();
+    }else if (command == "clean"){
+        command_clean();
     }else {
-        command_help();
+        cout << RED << "Unknown command: " << command << RESET << endl;
     }
     return 0;
 }

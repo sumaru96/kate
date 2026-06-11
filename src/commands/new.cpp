@@ -1,6 +1,6 @@
 // new.cpp
 
-// This file contains the implementations of function by creating global path and call other funtion for creating unique files for language 
+// This file contains the implementations of function by creating global path and call other function for creating unique files for language
 
 #include "../main-header.hpp"
 #include "assets/gradlew.h"
@@ -22,7 +22,7 @@ zipStorePath=wrapper/dists
 
     // This function create path and call function
 
-int command_new(int argc, char* argv[]){
+int command_new(const int argc, char* argv[]){
 
     if(argc < 3){
         return 0;
@@ -30,12 +30,12 @@ int command_new(int argc, char* argv[]){
 
         // Global path
 
-    filesystem::path root_path = argv[2];
-    filesystem::path wrapper_path = root_path / "gradle" / "wrapper";
-    filesystem::path gradlew_sh_path = root_path / "gradlew.sh";
-    filesystem::path gradlew_bat_path = root_path / "gradlew.bat";
-    filesystem::path gradlew_wrapper_path = wrapper_path / "gradle-wrapper.jar";
-    filesystem::path gradlew_wrapper_properties_path = wrapper_path / "gradle-wrapper.properties";
+    const filesystem::path root_path = argv[2];
+    const filesystem::path wrapper_path = root_path / "gradle" / "wrapper";
+    const filesystem::path gradlew_sh_path = root_path / "gradlew.sh";
+    const filesystem::path gradlew_bat_path = root_path / "gradlew.bat";
+    const filesystem::path gradlew_wrapper_path = wrapper_path / "gradle-wrapper.jar";
+    const filesystem::path gradlew_wrapper_properties_path = wrapper_path / "gradle-wrapper.properties";
 
         // Creating directories and files
 
@@ -49,9 +49,9 @@ int command_new(int argc, char* argv[]){
         // calling function for selected language
 
     if(argc >= 4 && string(argv[3]) == "--kotlin"){
-        create_directory(root_path, string("kotlin"));
+        create_directory(root_path, "kotlin"s);
     }else if(argc >= 4 && string(argv[3]) == "--java"){
-        create_directory(root_path, string("java"));
+        create_directory(root_path, "java"s);
     }else{
         cout << YELLOW <<"No language specified, creating a default gradle project." << RESET << endl;
         create_directory(root_path, string("kotlin"));
