@@ -82,7 +82,7 @@ string lowercase(const string& str) {
     for (char letter : str) {
         if (letter >= 'A' && letter <= 'Z') {
             result += static_cast<char>(letter + 32);
-        }
+        }else result += letter;
     }
     return result;
 }
