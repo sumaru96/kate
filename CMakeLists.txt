@@ -1,18 +1,19 @@
 cmake_minimum_required(VERSION 3.15)
-project(kate VERSION 1.0.1 LANGUAGES CXX)
+project(kate VERSION 1.0.2 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
-    src/main.cpp
-    src/text/parser.cpp
-    src/directories/create_language_directories.cpp
-    src/directories/functions.cpp
-    src/commands/building.cpp
-    src/commands/new.cpp
-    src/commands/help.cpp
+        src/main.cpp
+        src/text/parser.cpp
+        src/directories/create_language_directories.cpp
+        src/directories/functions.cpp
+        src/commands/building.cpp
+        src/commands/new.cpp
+        src/commands/help.cpp
         src/commands/clean.cpp
+        src/commands/CLICommandManager.cpp
 )
 
 add_executable(kate ${SOURCES})

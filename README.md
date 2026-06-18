@@ -1,4 +1,4 @@
-# KATE CLI TOOL v1.0.1
+# KATE CLI TOOL v1.0.2
 
 Kate is a lightweight and fast CLI utility for creating, building, and running Java and Kotlin projects without IDEs. It automatically manages the Gradle Wrapper for you.
 

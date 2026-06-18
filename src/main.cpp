@@ -7,7 +7,7 @@
 
 using namespace std;
 
-int main(const int argc, char* argv[]){
+int main(const int argc,const char* argv[]){
     
     if(argc <= 1){
         command_help();
@@ -26,6 +26,8 @@ int main(const int argc, char* argv[]){
         command_help();
     }else if (command == "clean"){
         command_clean();
+    }else if (command == "init") {
+        command_init();
     }else {
         cout << RED << "Unknown command: " << command << RESET << endl;
     }

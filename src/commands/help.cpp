@@ -7,7 +7,7 @@ using namespace std;
 
 int command_help() {
     cout << CYAN << "==============================================================" << RESET << endl;
-    cout << GREEN << "                    KATE CLI TOOL v1.0.1" << RESET << endl;
+    cout << GREEN << "                    KATE CLI TOOL v1.0.2" << RESET << endl;
     cout << CYAN << "==============================================================" << RESET << endl;
 
     cout << YELLOW << "About project:" << RESET << endl;
@@ -30,19 +30,20 @@ int command_help() {
     cout << "\t  " << MAGENTA << "--java" << RESET << "   : Sets up a Java project" << endl;
     cout << endl;
 
-    cout << GREEN << "  run [flag] [argument]" << RESET << endl;
+    cout << GREEN << "  init" << RESET << endl;
+    cout << "\tInitializes Kate in the current working directory." << endl;
+    cout << endl;
+
+    cout << GREEN << "  run [flag] [arguments]" << RESET << endl;
     cout << "\tRuns your application. By default, it builds and runs via Gradle." << endl;
     cout << "\tFlags for 'run':" << endl;
     cout << "\t  " << MAGENTA << "-u, --unrebuild" << RESET << " : Instant run. Launches the compiled .jar directly" << endl;
     cout << "\t                     (Skips Gradle to save time)." << endl;
-    cout << "\t                     Supports passing a single argument next." << endl;
     cout << "\t  " << MAGENTA << "-r, --rebuild" << RESET << "   : Forces Gradle to re-assemble and run." << endl;
-    cout << "\t  " << MAGENTA << "-a, --args" << RESET << "      : Passes ONE argument directly to your application." << endl;
-    cout << "\t                     Example: kate run -a hello" << endl;
-    cout << "\t                     Example: kate run -u -a fast" << endl;
-    cout << endl;
-    cout << RED << "  [ATTENTION!] Pass only ONE argument WITHOUT quotes or brackets." << RESET << endl;
-    cout << RED << "               Multiple arguments or quotes will cause an error." << RESET << endl;
+    cout << "\t  " << MAGENTA << "-a, --args" << RESET << "      : Passes arguments directly to your application." << endl;
+    cout << "\t                     Supports UNLIMITED arguments using quotes!" << endl;
+    cout << "\t                     Example: kate run -a \"hello world from kate\"" << endl;
+    cout << "\t                     Example: kate run -u -a \"fast boot active\"" << endl;
     cout << endl;
 
     cout << GREEN << "  build" << RESET << endl;

@@ -1,6 +1,6 @@
 [package]
 name = "kate"
-version = "1.O.1"
+version = "1.O.2"
 type = "app"
 description = ""
 author = "sumaru96"

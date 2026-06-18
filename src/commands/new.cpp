@@ -22,7 +22,7 @@ zipStorePath=wrapper/dists
 
     // This function create path and call function
 
-int command_new(const int argc, char* argv[]){
+int command_new(const int argc,const char* argv[]){
 
     if(argc < 3){
         return 0;
@@ -44,7 +44,7 @@ int command_new(const int argc, char* argv[]){
     if(!is_not_error(binary_to_file(gradlew_sh_path, gradlew, gradlew_len))) return -1;
     if(!is_not_error(binary_to_file(gradlew_bat_path, gradlew_bat, gradlew_bat_len))) return -1;
     if(!is_not_error(binary_to_file(gradlew_wrapper_path, gradle_wrapper_jar, gradle_wrapper_jar_len))) return -1;
-    if (!is_not_error(create_toml_file(root_path))) return -1;
+    if(!is_not_error(create_toml_file(root_path))) return -1;
 
         // calling function for selected language
 
@@ -53,7 +53,6 @@ int command_new(const int argc, char* argv[]){
     }else if(argc >= 4 && string(argv[3]) == "--java"){
         create_directory(root_path, "java"s);
     }else{
-        cout << YELLOW <<"No language specified, creating a default gradle project." << RESET << endl;
         create_directory(root_path, string("kotlin"));
     }
     
@@ -64,5 +63,16 @@ int command_new(const int argc, char* argv[]){
     cout << MAGENTA << "\tcd " << root_path << RESET << endl;
     cout << MAGENTA << "\tkate run" << RESET << endl;
     return 0;
+}
+
+int command_init() {
+    const string name = filesystem::current_path().filename().string();
+    const filesystem::path toml_path =  "./kate.toml";
+    if (filesystem::exists(toml_path)) {
+        return 0;
+    }
+    const string source = "[project]\nname = \"" + name + "\"\n" + "[run.unrebuild]\n"
+                    + "jar-path = \"build/libs/" + name + ".jar\"\n" ;
+    return create_file_and_write(toml_path, source);
 }
 

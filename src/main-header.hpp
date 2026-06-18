@@ -25,18 +25,27 @@ vector<string> get_values(const vector<string>& value, const string& toml);
 string lowercase(const string& str);
 string strim(const string& str);
 string read_file(const filesystem::path& path);
+string getConsoleArguments(int argc,const char* argv[],int id);
 
 int create_directory(const filesystem::path& path, const string& lang);
 int binary_to_file(const filesystem::path& path,const unsigned char binary[],unsigned int length);
 int create_file_and_write(const filesystem::path& path,const string &source);
 int create_dir(const filesystem::path& path);
 int create_toml_file(const filesystem::path& path);
-int command_new(int argc, char* argv[]);
-int command_run(int argc, char* argv[]);
+int command_new(int argc,const char* argv[]);
+int command_run(int argc,const char* argv[]);
 int command_build();
 int command_help();
 int command_clean();
-
+int executeCommand(const std::string& args);
+int command_init();
+int create_project_file(const filesystem::path& source_directories_path,
+                        const filesystem::path& gradle_build_file_path,
+                        const string& SOURCE_GRADLE_BUILD,
+                        const filesystem::path& source_main_file_path,
+                        const string& SOURCE_CODE,
+                        const filesystem::path& gradle_settings_file_path,
+                        const string& SOURCE_SETTINGS);
 
 bool is_not_error(const int& x);
 

@@ -78,9 +78,9 @@ bool is_not_error(const int& x){
     // This function create TOML file for Kate parameters
 
 int create_toml_file(const filesystem::path& path){
-    filesystem::path toml_path = path / "kate.toml";
+    const filesystem::path toml_path = path / "kate.toml";
     if (filesystem::exists(toml_path)) {
-        return 0; 
+        return 0;
     }
     const string name = path.string();
     const string source = "[project]\nname = \"" + name + "\"\n" + "[run.unrebuild]\n"
@@ -98,4 +98,21 @@ string read_file(const filesystem::path& path) {
     }
     cerr << RED << "[ERROR] Failed to reading file : " << MAGENTA << path << RESET << endl;
     return "";
+}
+
+
+
+
+int create_project_file(const filesystem::path& source_directories_path,
+                        const filesystem::path& gradle_build_file_path,
+                        const string& SOURCE_GRADLE_BUILD,
+                        const filesystem::path& source_main_file_path,
+                        const string& SOURCE_CODE,
+                        const filesystem::path& gradle_settings_file_path,
+                        const string& SOURCE_SETTINGS) {
+    if(!is_not_error(create_dir(source_directories_path))) return -1;
+    if(!is_not_error(create_file_and_write(gradle_build_file_path, SOURCE_GRADLE_BUILD))) return -1;
+    if(!is_not_error(create_file_and_write(source_main_file_path, SOURCE_CODE))) return -1;
+    if(!is_not_error(create_file_and_write(gradle_settings_file_path, SOURCE_SETTINGS))) return -1;
+    return 0;
 }

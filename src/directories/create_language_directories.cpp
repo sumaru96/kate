@@ -96,12 +96,9 @@ int create_directory(const filesystem::path& path, const string& lang){
         gradle_settings_file_path = path / "settings.gradle";
 
             // creating dir and files for java project
-
-        if(!is_not_error(create_dir(source_directories_path))) return -1;
-        if(!is_not_error(create_file_and_write(gradle_build_file_path, SOURCE_JAVA_GRADLE_BUILD))) return -1;
-        if(!is_not_error(create_file_and_write(source_main_file_path, SOURCE_JAVA_CODE))) return -1;
-        if(!is_not_error(create_file_and_write(gradle_settings_file_path, SOURCE_SETTINGS))) return -1;
-
+        if (!is_not_error(create_project_file(source_directories_path, gradle_build_file_path,
+                       SOURCE_JAVA_GRADLE_BUILD,source_main_file_path,SOURCE_JAVA_CODE,
+                       gradle_settings_file_path,SOURCE_SETTINGS))) return -1;
     }else if (lang == "kotlin") {
 
             // Here set value for kotlin project
@@ -112,20 +109,9 @@ int create_directory(const filesystem::path& path, const string& lang){
         gradle_settings_file_path = path / "settings.gradle.kts";
 
             // creating dir and files for kotlin project
-
-        if(!is_not_error(create_dir(source_directories_path))) return -1;
-        if(!is_not_error(create_file_and_write(gradle_build_file_path, SOURCE_KOTLIN_GRADLE_BUILD))) return -1;
-        if(!is_not_error(create_file_and_write(source_main_file_path, SOURCE_KOTLIN_CODE))) return -1;
-        if(!is_not_error(create_file_and_write(gradle_settings_file_path, SOURCE_SETTINGS))) return -1;
-    
-    }else {
-
-        cerr << RED << "\n--------------------------------------------------------------\n" << RESET << endl ;
-        cerr << RED << "\t [ERROR] Select one of the possible languages to create directories" << RESET << endl ;
-        cerr << RED << "\n--------------------------------------------------------------\n" << RESET << endl ;
-
-        return -1;
-    }
-
+        if (!is_not_error(create_project_file(source_directories_path, gradle_build_file_path,
+                        SOURCE_KOTLIN_GRADLE_BUILD,source_main_file_path,SOURCE_KOTLIN_CODE,
+                        gradle_settings_file_path,SOURCE_SETTINGS))) return -1;
+    }else return -1;
     return 0;
 }
